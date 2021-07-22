@@ -3,6 +3,7 @@ package jade;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 import renderer.Shader;
+import util.Time;
 
 import java.awt.event.KeyEvent;
 import java.nio.FloatBuffer;
@@ -41,10 +42,10 @@ public class LevelEditorScene extends Scene{
     private int vertexID, fragmentID, shaderProgram;
     private float vertexArray[] = {
             // position                 // color
-            100.5f, -100.5f, 0.0f,           1.0f, 0.0f, 0.0f, 1.0f, // Bottom right 0
-            -100.5f, 100.5f, 0.0f,           0.0f, 1.0f, 0.0f, 1.0f, // Top left     1
+            100.5f, 0.5f, 0.0f,           1.0f, 0.0f, 0.0f, 1.0f, // Bottom right 0
+            0.5f, 100.5f, 0.0f,           0.0f, 1.0f, 0.0f, 1.0f, // Top left     1
             100.5f,  100.5f, 0.0f,           0.0f, 0.0f, 1.0f, 1.0f, // Top right    2
-            -100.5f, -100.5f, 0.0f,          1.0f, 1.0f, 0.0f, 1.0f, // Bottom left  3
+            0.5f, 0.5f, 0.0f,          1.0f, 1.0f, 0.0f, 1.0f, // Bottom left  3
     };
 
     // IMPORTANT: Must be in counter-clockwise direction
@@ -112,7 +113,7 @@ public class LevelEditorScene extends Scene{
 
     @Override
     public void update(float dt) {
-        this.camera.position.x -= dt * 50.0f;
+        this.camera.position.x -= dt * 100.0f;
         /*System.out.println("We are running at " + (1.0f / dt) + "FPS");
 
         if(!changingScene && KeyListener.isKeyPressed(KeyEvent.VK_SPACE)) {
@@ -132,6 +133,7 @@ public class LevelEditorScene extends Scene{
         this.defaultShader.use();
         this.defaultShader.uploadMat4f("uProjection", camera.getProjectionMatrix());
         this.defaultShader.uploadMat4f("uView", camera.getViewMatrix());
+        this.defaultShader.uploadFloat("uTime", Time.getTime());
         // Bind the VAO we're using
         glBindVertexArray(vaoID);
         // Enable the vertex attribute pointers
