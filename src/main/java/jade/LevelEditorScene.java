@@ -1,6 +1,10 @@
 package jade;
 
-import components.FontRenderer;
+import components.SpriteRenderer;
+import org.joml.Vector2f;
+import org.joml.Vector4f;
+
+/*import components.FontRenderer;
 import components.SpriteRenderer;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
@@ -16,7 +20,7 @@ import java.nio.IntBuffer;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
-
+*/
 public class LevelEditorScene extends Scene{
     /*private boolean changingScene = false;
     private float timeToChangeScene = 2.0f;*/
@@ -42,7 +46,7 @@ public class LevelEditorScene extends Scene{
             "{\n" +
             "    color = fColor;\n" +
             "}";*/
-
+/*
     private int vertexID, fragmentID, shaderProgram;
     private float vertexArray[] = {
             // position                      // color                    // UV Coordinates
@@ -54,6 +58,9 @@ public class LevelEditorScene extends Scene{
 
     // IMPORTANT: Must be in counter-clockwise direction
     private int[] elementArray = {
+
+    }
+    */
         /*
                    *          *
 
@@ -61,10 +68,12 @@ public class LevelEditorScene extends Scene{
 
                    *          *
         */
-            2, 1, 0,    // Top right triangle
+/*            2, 1, 0,    // Top right triangle
             0, 1, 3     // bottom left triangle
     };
 
+*/
+/*
     private int vaoID, vboID, eboID;
 
     private Shader defaultShader;
@@ -73,7 +82,7 @@ public class LevelEditorScene extends Scene{
     private GameObject testObj;
 
     private boolean firstTime = false;
-
+*/
     public LevelEditorScene() {
         //System.out.println("Inside LevelEditorScene.");
 
@@ -81,7 +90,28 @@ public class LevelEditorScene extends Scene{
 
     @Override
     public void init() {
-        System.out.println("Creating test object");
+        this.camera = new Camera(new Vector2f());
+
+        int xOffset = 10;
+        int yOffset = 10;
+
+        float totalWidth = (float)(600 -xOffset * 2);
+        float totalHeight = (float)(300 -yOffset * 2);
+        float sizeX = totalWidth / 100.0f;
+        float sizeY = totalHeight / 100.0f;
+
+        for(int x = 0; x < 100; x++){
+            for(int y = 0; y < 100; y++){
+                float xPos = xOffset + (x * sizeX);
+                float yPos = yOffset + (y * sizeY);
+
+                GameObject go = new GameObject("Obj" + x + "" + y, new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
+                go.addComponent(new SpriteRenderer(new Vector4f(xPos / totalWidth, yPos / totalHeight, 1 ,1 )));
+                this.addGameObjectToScene(go);
+            }
+        }
+
+/*        System.out.println("Creating test object");
         this.testObj = new GameObject("test object");
         this.testObj.addComponent(new SpriteRenderer());
         this.testObj.addComponent(new FontRenderer());
@@ -127,12 +157,13 @@ public class LevelEditorScene extends Scene{
 
         glVertexAttribPointer(2, uvSize, GL_FLOAT, false, vertexSizeBytes, (positionSize + colorSize) * Float.BYTES);
         glEnableVertexAttribArray(2);
-
+*/
     }
 
     @Override
     public void update(float dt) {
-        this.camera.position.x -= dt * 100.0f;
+        System.out.println("FPS: " + 1.0f / dt);
+        //this.camera.position.x -= dt * 100.0f;
         /*System.out.println("We are running at " + (1.0f / dt) + "FPS");
 
         if(!changingScene && KeyListener.isKeyPressed(KeyEvent.VK_SPACE)) {
@@ -147,7 +178,7 @@ public class LevelEditorScene extends Scene{
         else if(changingScene){
             Window.changeScene(1);
         }*/
-
+        /*
         // Bind shader program
         this.defaultShader.use();
         // upload texture to shader
@@ -180,9 +211,10 @@ public class LevelEditorScene extends Scene{
             this.addGameObjectToScene(go);
             this.firstTime=true;
         }
-
+        */
         for(GameObject go: this.gameObjects) {
             go.update(dt);
         }
+        this.renderer.render();
     }
 }
