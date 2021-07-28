@@ -3,6 +3,7 @@ package jade;
 import components.SpriteRenderer;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import util.AssetPool;
 
 /*import components.FontRenderer;
 import components.SpriteRenderer;
@@ -111,6 +112,8 @@ public class LevelEditorScene extends Scene{
             }
         }
 
+        loadResources();
+
 /*        System.out.println("Creating test object");
         this.testObj = new GameObject("test object");
         this.testObj.addComponent(new SpriteRenderer());
@@ -158,6 +161,10 @@ public class LevelEditorScene extends Scene{
         glVertexAttribPointer(2, uvSize, GL_FLOAT, false, vertexSizeBytes, (positionSize + colorSize) * Float.BYTES);
         glEnableVertexAttribArray(2);
 */
+    }
+
+    private void loadResources() {
+        AssetPool.getShader("assets/shaders/default.glsl");
     }
 
     @Override

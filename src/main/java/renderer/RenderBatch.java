@@ -3,6 +3,7 @@ package renderer;
 import components.SpriteRenderer;
 import jade.Window;
 import org.joml.Vector4f;
+import util.AssetPool;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
@@ -33,8 +34,10 @@ public class RenderBatch {
     private Shader shader;
 
     public RenderBatch(int maxBatchSize) {
-        this.shader = new Shader("assets/shaders/default.glsl");
-        this.shader.compileAndLink();
+        System.out.println("Starting the render batch.");
+        /*this.shader = new Shader("assets/shaders/default.glsl");
+        this.shader.compileAndLink();*/
+        shader = AssetPool.getShader("assets/shaders/default.glsl");
         this.sprites = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
 
