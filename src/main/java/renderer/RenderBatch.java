@@ -136,18 +136,20 @@ public class RenderBatch {
             else if(i==3){
                 yAdd = 1.0f;
             }
+
+            // load position
+            this.vertices[offset] = sprite.gameObject.transform.position.x + (xAdd * sprite.gameObject.transform.scale.x);
+            this.vertices[offset + 1] = sprite.gameObject.transform.position.y + (yAdd * sprite.gameObject.transform.scale.y);
+
+            // load color
+            this.vertices[offset + 2] = color.x;
+            this.vertices[offset + 3] = color.y;
+            this.vertices[offset + 4] = color.z;
+            this.vertices[offset + 5] = color.w;
+
+            offset += VERTEX_SIZE;
+
         }
-
-        // load position
-        this.vertices[offset] = sprite.gameObject.transform.position.x + (xAdd * sprite.gameObject.transform.scale.x);
-        this.vertices[offset + 1] = sprite.gameObject.transform.position.y + (yAdd * sprite.gameObject.transform.scale.y);
-
-
-        // load color
-        this.vertices[offset + 2] = color.x;
-        this.vertices[offset + 3] = color.y;
-        this.vertices[offset + 4] = color.z;
-        this.vertices[offset + 5] = color.w;
 
     }
 

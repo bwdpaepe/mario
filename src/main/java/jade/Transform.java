@@ -11,6 +11,7 @@ public class Transform {
     }
 
     public Transform(Vector2f position) {
+
         this.init(position, new Vector2f());
     }
 
