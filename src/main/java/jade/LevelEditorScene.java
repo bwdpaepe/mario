@@ -1,6 +1,8 @@
 package jade;
 
+import components.Sprite;
 import components.SpriteRenderer;
+import components.SpriteSheet;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.system.CallbackI;
@@ -92,7 +94,10 @@ public class LevelEditorScene extends Scene{
 
     @Override
     public void init() {
+        loadResources();
         this.camera = new Camera(new Vector2f());
+        SpriteSheet sprites = AssetPool.getSpriteSheet("assets/images/spritesheet.png");
+
 
         /*int xOffset = 10;
         int yOffset = 10;
@@ -114,14 +119,14 @@ public class LevelEditorScene extends Scene{
         }*/
 
         GameObject obj1 = new GameObject("Object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
-        obj1.addComponent(new SpriteRenderer(AssetPool.getTexture("assets/images/mario.png")));
+        obj1.addComponent(new SpriteRenderer(sprites.getSprite(0)));
         this.addGameObjectToScene(obj1);
 
         GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 400), new Vector2f(256, 256)));
-        obj2.addComponent(new SpriteRenderer(AssetPool.getTexture("assets/images/superMario.png")));
+        obj2.addComponent(new SpriteRenderer(sprites.getSprite(10)));
         this.addGameObjectToScene(obj2);
 
-        loadResources();
+
 
 /*        System.out.println("Creating test object");
         this.testObj = new GameObject("test object");
@@ -173,7 +178,11 @@ public class LevelEditorScene extends Scene{
     }
 
     private void loadResources() {
+
         AssetPool.getShader("assets/shaders/default.glsl");
+        AssetPool.addSpriteSheet("assets/images/spritesheet.png",
+                new SpriteSheet(AssetPool.getTexture("assets/images/spritesheet.png"),
+                        16, 16 ,26, 0));
     }
 
     @Override
