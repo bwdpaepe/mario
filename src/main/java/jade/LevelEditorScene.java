@@ -26,6 +26,9 @@ import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 */
 public class LevelEditorScene extends Scene{
+
+    private GameObject obj1;
+    private SpriteSheet sprites;
     /*private boolean changingScene = false;
     private float timeToChangeScene = 2.0f;*/
 
@@ -96,7 +99,7 @@ public class LevelEditorScene extends Scene{
     public void init() {
         loadResources();
         this.camera = new Camera(new Vector2f());
-        SpriteSheet sprites = AssetPool.getSpriteSheet("assets/images/spritesheet.png");
+        this.sprites = AssetPool.getSpriteSheet("assets/images/spritesheet.png");
 
 
         /*int xOffset = 10;
@@ -118,11 +121,11 @@ public class LevelEditorScene extends Scene{
             }
         }*/
 
-        GameObject obj1 = new GameObject("Object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
-        obj1.addComponent(new SpriteRenderer(sprites.getSprite(0)));
-        this.addGameObjectToScene(obj1);
+        this.obj1 = new GameObject("Object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
+        this.obj1.addComponent(new SpriteRenderer(sprites.getSprite(0)));
+        this.addGameObjectToScene(this.obj1);
 
-        GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 400), new Vector2f(256, 256)));
+        GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)));
         obj2.addComponent(new SpriteRenderer(sprites.getSprite(10)));
         this.addGameObjectToScene(obj2);
 
@@ -189,6 +192,9 @@ public class LevelEditorScene extends Scene{
         );
     }
 
+    private int spriteIndex = 0;
+    private float spriteFlipTime = 0.2f;
+    private float spriteFlipTimeLeft = 0.0f;
     @Override
     public void update(float dt) {
         System.out.println("FPS: " + 1.0f / dt);
@@ -241,6 +247,16 @@ public class LevelEditorScene extends Scene{
             this.firstTime=true;
         }
         */
+        spriteFlipTimeLeft -= dt;
+        if(spriteFlipTimeLeft <= 0){
+            spriteFlipTimeLeft = spriteFlipTime;
+            spriteIndex++;
+            if(spriteIndex>4){
+                spriteIndex=0;
+            }
+            this.obj1.getComponent(SpriteRenderer.class).setSprite(this.sprites.getSprite(spriteIndex));
+        }
+        //this.obj1.transform.position.x += 10 * dt;
         for(GameObject go: this.gameObjects) {
             go.update(dt);
         }
