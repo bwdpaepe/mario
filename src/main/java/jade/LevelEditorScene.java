@@ -121,12 +121,16 @@ public class LevelEditorScene extends Scene{
             }
         }*/
 
-        this.obj1 = new GameObject("Object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
-        this.obj1.addComponent(new SpriteRenderer(sprites.getSprite(0)));
+        this.obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100), new Vector2f(256, 256)), 2);
+        this.obj1.addComponent(new SpriteRenderer(new Sprite(
+                AssetPool.getTexture("assets/images/blendImage1.png")
+        )));
         this.addGameObjectToScene(this.obj1);
 
-        GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)));
-        obj2.addComponent(new SpriteRenderer(sprites.getSprite(10)));
+        GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 4);
+        obj2.addComponent(new SpriteRenderer(new Sprite(
+                AssetPool.getTexture("assets/images/blendImage2.png")
+        )));
         this.addGameObjectToScene(obj2);
 
 
@@ -192,9 +196,6 @@ public class LevelEditorScene extends Scene{
         );
     }
 
-    private int spriteIndex = 0;
-    private float spriteFlipTime = 0.2f;
-    private float spriteFlipTimeLeft = 0.0f;
     @Override
     public void update(float dt) {
         System.out.println("FPS: " + 1.0f / dt);
@@ -247,16 +248,6 @@ public class LevelEditorScene extends Scene{
             this.firstTime=true;
         }
         */
-        spriteFlipTimeLeft -= dt;
-        if(spriteFlipTimeLeft <= 0){
-            spriteFlipTimeLeft = spriteFlipTime;
-            spriteIndex++;
-            if(spriteIndex>4){
-                spriteIndex=0;
-            }
-            this.obj1.getComponent(SpriteRenderer.class).setSprite(this.sprites.getSprite(spriteIndex));
-        }
-        //this.obj1.transform.position.x += 10 * dt;
         for(GameObject go: this.gameObjects) {
             go.update(dt);
         }
