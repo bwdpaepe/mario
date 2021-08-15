@@ -1,5 +1,7 @@
 package jade;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import components.Sprite;
 import components.SpriteRenderer;
 import components.SpriteSheet;
@@ -30,6 +32,7 @@ public class LevelEditorScene extends Scene{
 
     private GameObject obj1;
     private SpriteSheet sprites;
+    private SpriteRenderer obj1SpriteRenderer;
     /*private boolean changingScene = false;
     private float timeToChangeScene = 2.0f;*/
 
@@ -123,15 +126,26 @@ public class LevelEditorScene extends Scene{
         }*/
 
         this.obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100), new Vector2f(256, 256)), 2);
-        this.obj1.addComponent(new SpriteRenderer(new Vector4f(1, 0, 0, 1)));
+        //SpriteRenderer obj1SpriteRenderer = new SpriteRenderer();
+        this.obj1SpriteRenderer = new SpriteRenderer();
+        obj1SpriteRenderer.setColor(new Vector4f(1, 0, 0, 1));
+        this.obj1.addComponent(obj1SpriteRenderer);
         this.addGameObjectToScene(this.obj1);
         this.activeGameObject = obj1;
 
         GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 4);
-        obj2.addComponent(new SpriteRenderer(new Sprite(
-                AssetPool.getTexture("assets/images/blendImage2.png")
-        )));
+        SpriteRenderer obj2SpriteRenderer = new SpriteRenderer();
+        Sprite obj2Sprite = new Sprite();
+        obj2Sprite.setTex(AssetPool.getTexture("assets/images/blendImage2.png"));
+        obj2SpriteRenderer.setSprite(obj2Sprite);
+        obj2.addComponent(obj2SpriteRenderer);
         this.addGameObjectToScene(obj2);
+
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
+
+        System.out.println(gson.toJson(obj1SpriteRenderer));
 
 
 
@@ -199,6 +213,10 @@ public class LevelEditorScene extends Scene{
     @Override
     public void update(float dt) {
         System.out.println("FPS: " + 1.0f / dt);
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
+        System.out.println(gson.toJson(obj1SpriteRenderer));
         //this.camera.position.x -= dt * 100.0f;
         /*System.out.println("We are running at " + (1.0f / dt) + "FPS");
 
