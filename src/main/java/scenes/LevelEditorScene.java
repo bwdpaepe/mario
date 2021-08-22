@@ -7,7 +7,9 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import jade.*;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
+import renderer.DebugDraw;
 import scenes.Scene;
 import util.AssetPool;
 
@@ -105,6 +107,7 @@ public class LevelEditorScene extends Scene {
         loadResources();
         this.camera = new Camera(new Vector2f());
         this.sprites = AssetPool.getSpriteSheet("assets/images/spritesheets/decorationsAndBlocks.png");
+        DebugDraw.addLine2D(new Vector2f(0,0), new Vector2f(800,800), new Vector3f(1,0,0), 120);
         if(levelLoaded){
             this.activeGameObject = gameObjects.get(0);
             return;
@@ -159,6 +162,8 @@ public class LevelEditorScene extends Scene {
 
         GameObject obj = gson.fromJson(serialized, GameObject.class);
         System.out.println(obj);
+
+
 
 
 
