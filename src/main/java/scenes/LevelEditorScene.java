@@ -35,7 +35,8 @@ public class LevelEditorScene extends Scene {
     private GameObject obj1;
     private SpriteSheet sprites;
     private SpriteRenderer obj1SpriteRenderer;
-    private MouseControls mouseControls = new MouseControls();
+    //private MouseControls mouseControls = new MouseControls();
+    private GameObject levelEditorStuff = new GameObject("LevelEditor", new Transform(new Vector2f()),0);
     /*private boolean changingScene = false;
     private float timeToChangeScene = 2.0f;*/
 
@@ -104,6 +105,8 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
+        levelEditorStuff.addComponent(new MouseControls());
+        levelEditorStuff.addComponent(new GridLines());
         loadResources();
         this.camera = new Camera(new Vector2f());
         this.sprites = AssetPool.getSpriteSheet("assets/images/spritesheets/decorationsAndBlocks.png");
@@ -285,7 +288,7 @@ public class LevelEditorScene extends Scene {
             this.firstTime=true;
         }
         */
-        mouseControls.update(dt);
+        levelEditorStuff.update(dt);
         for(GameObject go: this.gameObjects) {
             go.update(dt);
         }
@@ -311,11 +314,11 @@ public class LevelEditorScene extends Scene {
             Vector2f[] texCoords = sprite.getTexCoords();
 
             ImGui.pushID(i);
-            if(ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y)){
+            if(ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[2].y, texCoords[0].x, texCoords[0].y)){
                 System.out.println("Button " + i + " clicked");
-                GameObject object = Prefabs.generateSpriteObject(sprite, spriteWidth, spriteHeight);
+                GameObject object = Prefabs.generateSpriteObject(sprite, 32, 32);
                 // Attach this to the mouse cursor
-                mouseControls.pickupObject(object);
+                levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
 
             }
             ImGui.popID();
