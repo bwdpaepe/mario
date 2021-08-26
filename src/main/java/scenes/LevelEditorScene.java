@@ -110,11 +110,11 @@ public class LevelEditorScene extends Scene {
         loadResources();
         this.camera = new Camera(new Vector2f());
         this.sprites = AssetPool.getSpriteSheet("assets/images/spritesheets/decorationsAndBlocks.png");
-        DebugDraw.addLine2D(new Vector2f(0,0), new Vector2f(800,800), new Vector3f(1,0,0), 120);
-        if(levelLoaded){
+        //DebugDraw.addLine2D(new Vector2f(0,0), new Vector2f(800,800), new Vector3f(1,0,0), 120);
+        /*if(levelLoaded){
             this.activeGameObject = gameObjects.get(0);
             return;
-        }
+        }*/
 
 
 
@@ -137,7 +137,7 @@ public class LevelEditorScene extends Scene {
             }
         }*/
 
-        this.obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100), new Vector2f(256, 256)), 2);
+        /*this.obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100), new Vector2f(256, 256)), 2);
         //SpriteRenderer obj1SpriteRenderer = new SpriteRenderer();
         this.obj1SpriteRenderer = new SpriteRenderer();
         obj1SpriteRenderer.setColor(new Vector4f(1, 0, 0, 1));
@@ -152,7 +152,7 @@ public class LevelEditorScene extends Scene {
         obj2Sprite.setTex(AssetPool.getTexture("assets/images/blendImage2.png"));
         obj2SpriteRenderer.setSprite(obj2Sprite);
         obj2.addComponent(obj2SpriteRenderer);
-        this.addGameObjectToScene(obj2);
+        this.addGameObjectToScene(obj2);*/
 
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -232,6 +232,7 @@ public class LevelEditorScene extends Scene {
         );
     }
 
+    float angle = 0.0f;
     @Override
     public void update(float dt) {
         System.out.println("FPS: " + 1.0f / dt);
@@ -289,6 +290,9 @@ public class LevelEditorScene extends Scene {
         }
         */
         levelEditorStuff.update(dt);
+        DebugDraw.addBox2D(new Vector2f(200,200), new Vector2f(64,32), angle, new Vector3f(0,1,0),1);
+        angle+=40.0f*dt;
+        DebugDraw.addCircle(new Vector2f(300,200), 50, new Vector3f(1,1,0),1);
         for(GameObject go: this.gameObjects) {
             go.update(dt);
         }
